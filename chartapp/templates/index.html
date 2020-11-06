@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Covid-19 Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+<div>
+    <div>
+        <h1>Total Count:{{total_count}}</h1>
+    </div>
+</div>
+<div class="col-lg-3 float-left" style="max-height:650px; float:left; max-width:400px; overflow:scroll; overflow-x:hidden">
+    <div class="col-lg-12" style="float:left">
+<div class="col-lg-4" style="float:left">
+    {% for countries in country_names %}
+    <!-- <button style="width:100px;">{{countries}}</button><br> -->
+    <input type="button" value="{{countries}}" style="width:100px;"><br>
+    {% endfor %}
+</div>
+    <div class="col-lg-8" style="float:left;">
+    <canvas id="myChart" style="width:250px; height: 4100px;"></canvas>
+</div>
+</div>
+</div>
+<div class="col-lg-6"></div>
+<div class="col-lg-3"></div>
+</body>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+var chartOptions={
+                    legend:{
+                    display:false
+                    },
+
+                        scales:{
+                        xAxes:[{
+                        barpercentage:1
+                        }],
+                        yAxes:[
+                        { ticks:{display:false} },
+                        {display:false},
+
+                        ],
+                        elements:{
+                        rectangle:{
+                        borderSkipped:'left',
+                        }
+                        }
+                        }
+
+        }
+
+var chart = new Chart(ctx, {
+
+
+    type: 'horizontalBar',
+
+
+    data: {
+        labels: {{country_names|safe}},
+        datasets: [{
+            label: 'Latest Infected Count',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: {{people_effected|safe}}
+        }]
+    },
+
+    options:chartOptions
+});
+</script>
+</html>
